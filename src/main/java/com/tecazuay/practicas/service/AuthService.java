@@ -6,8 +6,10 @@ import com.tecazuay.practicas.dto.UserResponse;
 import com.tecazuay.practicas.exception.ResponseNotFoundException;
 import com.tecazuay.practicas.model.Primary.Usuario;
 import com.tecazuay.practicas.model.Secondary.Docentes;
+import com.tecazuay.practicas.model.Secondary.FenixUsers;
 import com.tecazuay.practicas.repository.Primary.UsuarioRepository;
 import com.tecazuay.practicas.repository.Secondary.DocenteRepository;
+import com.tecazuay.practicas.repository.Secondary.FenixUsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +38,8 @@ public class AuthService {
         throw new ResponseNotFoundException("Usuario", "email", (String) userRequest.getEmail());
     }
 
+
+    //PRIMERA VEZ QUE INGRESA SE REGISTRA
     @Transactional
     public UserResponse signup(RegisterRequest registerRequest) {
         Usuario newUser = new Usuario();
@@ -43,10 +47,16 @@ public class AuthService {
         newUser.setEmail(registerRequest.getEmail());
         newUser.setUrlFoto(registerRequest.getUrlFoto());
 
-        Usuario usuario = usuarioRepository.save(newUser);
-        if (usuario != null)
-            return new UserResponse(usuario.getId(), usuario.getEmail(), usuario.getUrlFoto(), usuario.getCedula());
-        return null;
+        if(getfenixUsersRepository(registerRequest.getCedula())){
+            Usuario usuario = usuarioRepository.save(newUser);
+            if (usuario != null)
+                return new UserResponse(usuario.getId(), usuario.getEmail(), usuario.getUrlFoto(), usuario.getCedula());
+            return null;
+        }else{
+            throw new ResponseNotFoundException("Usuario", "cedula", (String) registerRequest.getCedula());
+        }
+
+
     }
     @Autowired
     private DocenteRepository docenteRepository;
@@ -59,4 +69,15 @@ public class AuthService {
 
 
     }
+
+
+    //Obtener usuario de tabla roles_personas medinate cedula
+    @Autowired
+    private FenixUsersRepository fenixUsersRepository;
+    private boolean getfenixUsersRepository(String cedula){
+        return fenixUsersRepository.existsByCedula(cedula);
+
+    }
+
+
 }
