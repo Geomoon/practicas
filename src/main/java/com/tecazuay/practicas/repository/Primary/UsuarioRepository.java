@@ -1,6 +1,6 @@
-package com.tecazuay.practicas.repository;
+package com.tecazuay.practicas.repository.Primary;
 
-import com.tecazuay.practicas.model.Usuario;
+import com.tecazuay.practicas.model.Primary.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

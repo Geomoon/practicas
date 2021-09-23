@@ -1,4 +1,4 @@
-package com.tecazuay.practicas.model;
+package com.tecazuay.practicas.model.Primary;
 
 import javax.persistence.*;
 import java.io.Serializable;
