@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 @Entity
 @Immutable
-@Table(name="vroles_persona")
+@Table(name="vusuarios")
 public class FenixUsers implements Serializable {
     @Id
     @Column(name = "id_persona", nullable = false,updatable = false)

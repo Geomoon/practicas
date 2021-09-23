@@ -29,12 +29,5 @@ public class ResponseNotFoundException extends RuntimeException {
         return fieldValue;
     }
 
-    @Override
-    public String toString() {
-        return "ResponseNotFoundException{" +
-                "resourceName='" + resourceName + '\'' +
-                ", fieldName='" + fieldName + '\'' +
-                ", fieldValue=" + fieldValue +
-                '}';
-    }
+
 }

@@ -22,6 +22,11 @@ public class AuthService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private DocenteRepository docenteRepository;
+    @Autowired
+    private FenixUsersRepository fenixUsersRepository;
+
     @Transactional
     public UserResponse login(UserRequest userRequest) {
         Optional<Usuario> optional = usuarioRepository.findByEmail(userRequest.getEmail());
@@ -58,22 +63,15 @@ public class AuthService {
 
 
     }
-    @Autowired
-    private DocenteRepository docenteRepository;
     public void getDocenteRepository() {
         List<Docentes> listadocentes= docenteRepository.findAll();
         listadocentes.stream().forEach(docentes -> {
             System.out.println(docentes.getPer_celular()+" "+docentes.getPer_primerapellido() +" "+docentes.getPer_correo());
 
         });
-
-
     }
 
-
     //Obtener usuario de tabla roles_personas medinate cedula
-    @Autowired
-    private FenixUsersRepository fenixUsersRepository;
     private boolean getfenixUsersRepository(String cedula){
         return fenixUsersRepository.existsByCedula(cedula);
 
